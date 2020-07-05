@@ -1,0 +1,53 @@
+﻿@model IList<Miniproyecto_Bertoni_Solutions.Models.Album>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            Select an Album:
+        </div>
+        <div class="col-md-4">
+            <select name="ddAlbums" id="ddAlbums">
+                @foreach (Miniproyecto_Bertoni_Solutions.Models.Album item in Model)
+                {
+                    <option value="@item.id">@item.title</option>
+                }
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button id="btnViewAlbum" class="btn btn-dark" >View Album</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="Photos">
+
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="Comments">
+
+                </div>
+            </div>
+        </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnViewAlbum").click(function () {
+                $.get("https://" + window.location.host + "/Home/Photos?albumId=" + $("#ddAlbums").val(), function (data) {
+                    $("#Photos").html(data);
+                    $("#Comments").html("");
+                });
+            });
+
+
+        });
+    </script>
+}
